@@ -5,10 +5,10 @@ import com.online.insurance.service.CustomerService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
-@RestController("/customer")
+@RestController
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -17,18 +17,23 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @GetMapping("/customer")
+    public String defaultPathGreet() {
+        return "Hello. Here you can interact with the customer data.";
+    }
+
     /**
-     * @param dob format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX — for example, "2000-10-31T01:30:00.000-05:00"
+     * @param dob The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31""
      * @return all customers that match criteria
      */
-    @GetMapping("/getWithDob")
+    @GetMapping("/customer/getWithDob")
     @ResponseBody
-    public List<Customer> getAllWithDOB(@RequestParam("dob")
-                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dob) {
+    public List<Customer> getAllWithDob(@RequestParam("dob")
+                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dob) {
         return customerService.getAllCustomersWithDOB(dob);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/customer/add")
     public void addCustomer(@RequestParam("firstName") String firstName,
                             @RequestParam("secondName") String secondName,
                             @RequestParam("dateOfBirth") String dob,

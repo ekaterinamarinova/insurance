@@ -4,7 +4,8 @@ import com.online.insurance.model.Customer;
 import com.online.insurance.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class CustomerService {
         this.repository = repository;
     }
 
-    public List<Customer> getAllCustomersWithDOB(LocalDateTime dob) {
+    public List<Customer> getAllCustomersWithDOB(LocalDate dob) {
 
         return repository.findAll()
                 .stream()
@@ -34,7 +35,8 @@ public class CustomerService {
             throw new IllegalArgumentException("Missing required customer parameter.");
         }
 
-        Customer customer = new Customer(firstName, secondName, LocalDateTime.parse(dateOfBirth), rating);
+        LocalDate parsedDOB = LocalDate.parse(dateOfBirth, DateTimeFormatter.ISO_DATE);
+        Customer customer = new Customer(firstName, secondName, parsedDOB, rating);
         repository.save(customer);
     }
 }

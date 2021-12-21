@@ -3,19 +3,19 @@ package com.online.insurance.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Document
 public class Customer {
-    private @Id Long id;
+    private @Id String id;
     private final String firstName;
     private final String secondName;
-    private final LocalDateTime dateOfBirth;
+    private final LocalDate dateOfBirth;
     private final Integer rating;
 
     public Customer(String firstName, String secondName,
-                    LocalDateTime dateOfBirth, Integer rating) {
+                    LocalDate dateOfBirth, Integer rating) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.dateOfBirth = dateOfBirth;
@@ -46,7 +46,7 @@ public class Customer {
                 '}';
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -58,7 +58,7 @@ public class Customer {
         return secondName;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
